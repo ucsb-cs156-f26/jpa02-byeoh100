@@ -28,15 +28,17 @@ public class TeamTest {
 
     @Test
     public void equals_returns_correct_bool() {
-        Team test_team;
-        test_team = new Team("test-team");
-        Team blank_team;
-        blank_team = new Team("");
+        Team test_team = new Team("test-team");
+        Team blank_team = new Team("");
+        Team diff_members_team = new Team("test-team");
+        diff_members_team.addMember("Bob");
         String test_string = "";
+
         assertTrue(team.equals(team), "Team object should be equal to itself.");
         assertFalse(team.equals(test_string), "Team object should not be equal to a different object.");
         assertTrue(team.equals(test_team), "Team objects with identical fields should be equal.");
-        assertFalse(team.equals(blank_team), "Team objects with different fields should not be equal.");
+        assertFalse(team.equals(blank_team), "Teams with different names should not be equal.");
+        assertFalse(team.equals(diff_members_team), "Teams with the same name but different members should not be equal.");
     }
 
     @Test
@@ -49,8 +51,10 @@ public class TeamTest {
         t2.addMember("bar");
         assertEquals(t1.hashCode(), t2.hashCode());
         Team t = new Team();
+        t.setName("foo");
+        t.addMember("bar");
         int result = t.hashCode();
-        int expectedResult = 1;
+        int expectedResult = 130294;
         assertEquals(expectedResult, result);
     }
 
